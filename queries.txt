@@ -1,0 +1,10 @@
+SELECT
+*
+FROM
+todo
+WHERE 
+status like "%%" and
+priority like "%%"
+and todo like "%%"
+and category like "%%"
+order by id;
