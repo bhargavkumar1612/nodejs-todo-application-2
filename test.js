@@ -42,6 +42,11 @@ function validateBody(request, response, next) {
         allOkay = false;
         break;
       }
+    } else {
+      response.status(400);
+      response.send(`"${key}" is not a valid field`);
+      allOkay = false;
+      break;
     }
   }
   if (allOkay) {

@@ -48,8 +48,8 @@ app.get("/todos/", validateQuery, async (request, response) => {
     FROM
     todo
     WHERE 
-    status like "%${status}%" and
-    priority like "%${priority}%"
+    status like "%${status}%" 
+    and priority like "%${priority}%"
     and todo like "%${search_q}%"
     and category like "%${category}%";`);
   response.send(allTodos.map((item) => toTodoResponseObject(item)));
@@ -78,7 +78,13 @@ app.get("/agenda/", validateQuery, async (request, response) => {
     todo
     WHERE due_date = "${format(new Date(date), "yyyy-MM-dd")}";
     `);
-  response.send(getAgenda.map((item) => toTodoResponseObject(item)));
+  if (getAgenda.length === 0) {
+    response.status(400);
+    response.send("Invalid Due Date");
+  } else {
+    response.send(getAgenda.map((item) => toTodoResponseObject(item)));
+    console.log(getAgenda);
+  }
 });
 
 // create a new todo post method api
